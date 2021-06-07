@@ -1,0 +1,8 @@
+import pandas as pd
+import json
+with open(r'C:\Users\Denis\Desktop\py4e\Chapter16\Capstone\Understat\All_2021_Players.json') as data_file:    
+    d= json.load(data_file)  
+
+df = pd.json_normalize(d)
+print(df)
+df.to_csv('All_2021_Players.csv')
