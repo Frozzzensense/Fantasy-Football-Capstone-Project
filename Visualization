@@ -1,0 +1,60 @@
+import pandas as pd
+pd.plotting.register_matplotlib_converters()
+import matplotlib.pyplot as plt
+%matplotlib inline
+import seaborn as sns
+from adjustText import adjust_text
+
+df=pd.read_csv(r'C:\Users\Denis\Desktop\py4e\Chapter16\Capstone\Understat\All_2021_Players.csv', index_col=0)
+
+top=df.nlargest(10,'xG_diff')
+bottom=df.nsmallest(10, 'xG_diff')
+
+top_90=df.nlargest(498, 'xG_diff/90')
+top_90_s=top_90[top_90.time>500].head(10)
+
+bottom_90=df.nsmallest(498, 'xG_diff/90')
+bottom_90_s=bottom_90[bottom_90.time>500].head(10)
+
+top_vis=top[['player_name', 'xG_diff']]
+
+best_pls=df[['player_name', 'key_passes', 'shots']]
+best_pls=best_pls[best_pls.key_passes>40]
+best_pls=best_pls[best_pls.shots>45]
+
+plt.figure(figsize=(16,8))
+plt.title('Best EPL 20/21 season players in key passes and shots')
+sns.scatterplot(x=best_pls['key_passes'],y=best_pls['shots'], alpha=0.5)
+texts = []
+for x, y, s in zip(best_pls['key_passes'],best_pls['shots'],best_pls['player_name']):
+    texts.append(plt.text(x, y, s))
+adjust_text(texts)
+plt.xlabel('Key passes', fontsize='medium')
+plt.ylabel("Shots", fontsize='medium')
+plt.savefig('Best_players.png') 
+plt.show()  
+ 
+
+plt.figure(figsize=(16,6))
+plt.title('Top EPL season 20/21 overperformers')
+sns.barplot(x=top_vis['player_name'], y=top_vis['xG_diff'])  
+plt.xlabel('')
+plt.savefig('Top_20_21.png')
+
+plt.figure(figsize=(16,6))
+plt.title('Top EPL season 20/21 underperformers')
+sns.barplot(x=bottom['player_name'], y=bottom['xG_diff'])  
+plt.xlabel('')
+plt.savefig('Bottom_20_21.png')
+
+plt.figure(figsize=(16,6))
+plt.title('Top EPL season 20/21 overperformers per 90 minutes with >500 minutes played')
+sns.barplot(x=top_90_s['player_name'], y=top_90_s['xG_diff/90']) 
+plt.xlabel('')
+plt.savefig('Top_20_21_90.png')
+
+plt.figure(figsize=(16,6))
+plt.title('Top EPL season 20/21 underperformers per 90 minutes with >500 minutes played')
+sns.barplot(x=bottom_90_s['player_name'], y=bottom_90_s['xG_diff/90'])  
+plt.xlabel('')
+plt.savefig('Bottom_20_21_90.png')
