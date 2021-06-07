@@ -1,0 +1,15 @@
+import pandas as pd
+
+df=pd.read_csv(r'C:\Users\Denis\Desktop\py4e\Chapter16\Capstone\Understat\All_2021_Players.csv',index_col=0)
+
+print(df.shape)
+
+df['xG_diff']=pd.Series(df['xG']-df['goals'], index=df.index)
+df.drop(labels=['xG_diff'], axis=1, inplace = True)
+df.insert(6, 'xG_diff', pd.Series(df['goals']-df['xG'], index=df.index))
+df.insert(7, 'xG_diff/90', pd.Series(df['xG_diff']/df['time']*90, index=df.index))
+#print(xG_diff)
+print(df)
+print(df.shape)
+
+df.to_csv('All_2021_Players.csv')
