@@ -1,0 +1,23 @@
+import asyncio
+import json
+import aiohttp
+
+from understat import Understat
+
+
+import nest_asyncio
+nest_asyncio.apply()
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        understat = Understat(session)
+        players = await understat.get_league_players(
+        "epl",
+        2021)
+        out_file=open(r'C:\Users\Denis\Desktop\py4e\Chapter16\Capstone\Understat\All_2021_Players.json', 'w')
+        json.dump(players, out_file, indent=4)
+        out_file.close()
+        
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
