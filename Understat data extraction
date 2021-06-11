@@ -14,7 +14,7 @@ async def main():
         players = await understat.get_league_players(
         "epl",
         2021)
-        out_file=open(r'C:\your path.json', 'w')
+        out_file=open(r'C:\your_path.json', 'w')
         json.dump(players, out_file, indent=4)
         out_file.close()
         
