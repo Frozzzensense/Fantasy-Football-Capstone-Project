@@ -1,8 +1,8 @@
 import pandas as pd
 from sqlalchemy import create_engine
-engine = create_engine('sqlite:///C:/Users/Denis/Desktop/py4e/Chapter16/Capstone/Understat/All_2021_Players.sqlite', echo=False)
+engine = create_engine('sqlite:///C:your_path/All_2021_Players.sqlite', echo=False)
 
-df=pd.read_csv(r'C:\Users\Denis\Desktop\py4e\Chapter16\Capstone\Understat\All_2021_Players.csv', index_col=0)
+df=pd.read_csv(r'C:\your_path\All_2021_Players.csv', index_col=0)
 
 df.to_sql('All_2021_Players', con=engine, if_exists='replace')
 
